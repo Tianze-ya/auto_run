@@ -7,6 +7,7 @@ https://github.com/Tianze-ya
 ## 开发文档
 
 本项目基于 Python 3.12.0 开发。
+仅对windows系统有效。
 
 ### 1.克隆本仓库
 
