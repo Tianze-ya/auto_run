@@ -3,15 +3,19 @@ import sys
 import winreg
 import win32api
 import win32con
+import ctypes
 
 
 def auto_run():
     """
     开机自启
+    仅对windows系统有效
+    需要管理员权限
     """
     #是否管理员权限
-    if not os.geteuid() == 0:
-        raise BaseException("请使用管理员身份运行此程序")
+    if not ctypes.windll.shell32.IsUserAnAdmin():
+                ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+                return
     #注册表位置
     location = f"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
     BaseName = os.path.basename(sys.argv[0])
@@ -41,4 +45,5 @@ def auto_run():
         win32api.RegSetValueEx(key, name, 0, win32con.REG_SZ, commnd)
         win32api.RegCloseKey(key) #关闭注册表
 
-auto_run()
+if __name__ == "__main__":
+    auto_run()
