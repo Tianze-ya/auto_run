@@ -19,7 +19,7 @@ def auto_run(switch:bool=True) -> None:
                 ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, BaseName, None, 1)
                 return
 
-    location = f"SOFTWARE\Microsoft\Windows\CurrentVersion\Run" #注册表位置
+    location = fr"SOFTWARE\Microsoft\Windows\CurrentVersion\Run" #注册表位置
 
     #判断是否已经自启
     def is_auto_run() ->bool:
@@ -56,6 +56,3 @@ def auto_run(switch:bool=True) -> None:
             #删除注册表
             win32api.RegDeleteValue(key, BaseName)
             win32api.RegCloseKey(key) #关闭注册表
-
-if __name__ == "__main__":
-    auto_run()
